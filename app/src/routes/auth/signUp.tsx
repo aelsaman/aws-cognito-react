@@ -120,8 +120,6 @@ const SignUp: React.FunctionComponent<{}> = () => {
   const accountCreated = (
     <>
       <Typography variant="h5">{`Created ${email} account`}</Typography>
-      <Typography variant="h5">{`given name ${givenName} account`}</Typography>
-      <Typography variant="h5">{`family name ${familyName} account`}</Typography>
       <Typography variant="h6">{`Verfiy Code sent to ${email}`}</Typography>
 
       <Box m={4}>

@@ -27,7 +27,7 @@ export const PhoneNumber: React.FunctionComponent<{ phoneNumberIsValid: boolean;
     <TextField
       fullWidth
       variant="outlined"
-      label={phoneNumberIsValid ? 'Email' : 'Invalid Email'}
+      label={phoneNumberIsValid ? 'Phone' : 'Invalid Phone'}
       error={!phoneNumberIsValid}
       onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
         setPhoneNumber(evt.target.value)
@@ -46,7 +46,7 @@ export const Password: React.FunctionComponent<{
       fullWidth
       type="password"
       variant="outlined"
-      label={passwordIsValid ? label : 'Minimum 8 characters'}
+      label={passwordIsValid ? label : 'Minimum 4 characters'}
       error={!passwordIsValid}
       onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
         setPassword(evt.target.value)
@@ -63,7 +63,7 @@ export const GivenName: React.FunctionComponent<{ givenNameIsValid: boolean; set
     <TextField
       fullWidth
       variant="outlined"
-      label={givenNameIsValid ? 'Given Name' : 'Minimum 5 characters'}
+      label={givenNameIsValid ? 'Given Name' : 'Minimum 4 characters'}
       error={!givenNameIsValid}
       onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
         setGivenName(evt.target.value)

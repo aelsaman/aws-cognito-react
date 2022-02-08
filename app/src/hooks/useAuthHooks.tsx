@@ -71,7 +71,7 @@ export const useValidGivenName = (initialValue: string) => {
 
   useEffect(() => {
     const givenNameSchema = yup.object().shape({
-      givenName: yup.string().min(5).required(),
+      givenName: yup.string().min(4).required(),
     })
 
     if (givenName.length === 0) {
@@ -93,7 +93,7 @@ export const useValidFamilyName = (initialValue: string) => {
 
   useEffect(() => {
     const familyNameSchema = yup.object().shape({
-      familyName: yup.string().min(8).required(),
+      familyName: yup.string().min(4).required(),
     })
 
     if (familyName.length === 0) {
