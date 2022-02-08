@@ -58,7 +58,7 @@ const AuthProvider: React.FunctionComponent = ({ children }) => {
         })
         window.localStorage.setItem('accessToken', `${session.accessToken.jwtToken}`)
         window.localStorage.setItem('refreshToken', `${session.refreshToken.token}`)
-        await setAttribute({ Name: 'website', Value: 'https://github.com/dbroadhurst/aws-cognito-react' })
+        // await setAttribute({ Name: 'website', Value: 'https://github.com/dbroadhurst/aws-cognito-react' })
         const attr: any = await getAttributes()
         setAttrInfo(attr)
         setAuthStatus(AuthStatus.SignedIn)
@@ -73,9 +73,9 @@ const AuthProvider: React.FunctionComponent = ({ children }) => {
     return null
   }
 
-  async function signInWithEmail(username: string, password: string) {
+  async function signInWithEmail(email: string, password: string) {
     try {
-      await cognito.signInWithEmail(username, password)
+      await cognito.signInWithEmail(email, password)
       setAuthStatus(AuthStatus.SignedIn)
     } catch (err) {
       setAuthStatus(AuthStatus.SignedOut)
@@ -83,9 +83,9 @@ const AuthProvider: React.FunctionComponent = ({ children }) => {
     }
   }
 
-  async function signUpWithEmail(username: string, email: string, password: string) {
+  async function signUpWithEmail(email: string, password: string, givenName: string, familyName: string, phoneNumber: string) {
     try {
-      await cognito.signUpUserWithEmail(username, email, password)
+      await cognito.signUpUser(email, password, givenName, familyName, phoneNumber)
     } catch (err) {
       throw err
     }
@@ -96,9 +96,9 @@ const AuthProvider: React.FunctionComponent = ({ children }) => {
     setAuthStatus(AuthStatus.SignedOut)
   }
 
-  async function verifyCode(username: string, code: string) {
+  async function verifyCode(email: string, code: string) {
     try {
-      await cognito.verifyCode(username, code)
+      await cognito.verifyCode(email, code)
     } catch (err) {
       throw err
     }
@@ -131,17 +131,17 @@ const AuthProvider: React.FunctionComponent = ({ children }) => {
     }
   }
 
-  async function sendCode(username: string) {
+  async function sendCode(email: string) {
     try {
-      await cognito.sendCode(username)
+      await cognito.sendCode(email)
     } catch (err) {
       throw err
     }
   }
 
-  async function forgotPassword(username: string, code: string, password: string) {
+  async function forgotPassword(email: string, code: string, password: string) {
     try {
-      await cognito.forgotPassword(username, code, password)
+      await cognito.forgotPassword(email, code, password)
     } catch (err) {
       throw err
     }

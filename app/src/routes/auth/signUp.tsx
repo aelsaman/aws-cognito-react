@@ -9,8 +9,14 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 
-import { useValidEmail, useValidPassword, useValidUsername } from '../../hooks/useAuthHooks'
-import { Email, Password, Username } from '../../components/authComponents'
+import {
+  useValidEmail,
+  useValidFamilyName,
+  useValidGivenName,
+  useValidPassword,
+  useValidPhoneNumber,
+} from '../../hooks/useAuthHooks'
+import { Email, Password, GivenName, FamilyName, PhoneNumber } from '../../components/authComponents'
 
 import { AuthContext } from '../../contexts/authContext'
 
@@ -24,8 +30,11 @@ const SignUp: React.FunctionComponent<{}> = () => {
   const classes = useStyles()
 
   const { email, setEmail, emailIsValid } = useValidEmail('')
+  const { phoneNumber, setPhoneNumber, phoneNumberIsValid } = useValidPhoneNumber('')
   const { password, setPassword, passwordIsValid } = useValidPassword('')
-  const { username, setUsername, usernameIsValid } = useValidUsername('')
+  // const { username, setUsername, usernameIsValid } = useValidUsername('')
+  const { givenName, setGivenName, givenNameIsValid } = useValidGivenName('')
+  const { familyName, setFamilyName, familyNameIsValid } = useValidFamilyName('')
   const [error, setError] = useState('')
   const [created, setCreated] = useState(false)
 
@@ -38,8 +47,12 @@ const SignUp: React.FunctionComponent<{}> = () => {
   const isValid =
     !emailIsValid ||
     email.length === 0 ||
-    !usernameIsValid ||
-    username.length === 0 ||
+    !phoneNumberIsValid ||
+    phoneNumber.length === 0 ||
+    !givenNameIsValid ||
+    givenName.length === 0 ||
+    !familyNameIsValid ||
+    familyName.length === 0 ||
     !passwordIsValid ||
     password.length === 0 ||
     !passwordConfirmIsValid ||
@@ -51,7 +64,7 @@ const SignUp: React.FunctionComponent<{}> = () => {
 
   const signInClicked = async () => {
     try {
-      await authContext.signUpWithEmail(username, email, password)
+      await authContext.signUpWithEmail(email, password, givenName, familyName, phoneNumber)
       setCreated(true)
     } catch (err) {
       if (err instanceof Error) {
@@ -63,10 +76,16 @@ const SignUp: React.FunctionComponent<{}> = () => {
   const signUp = (
     <>
       <Box width="80%" m={1}>
+        <GivenName givenNameIsValid={givenNameIsValid} setGivenName={setGivenName} />
+      </Box>
+      <Box width="80%" m={1}>
+        <FamilyName familyNameIsValid={familyNameIsValid} setFamilyName={setFamilyName} />
+      </Box>
+      <Box width="80%" m={1}>
         <Email emailIsValid={emailIsValid} setEmail={setEmail} />
       </Box>
       <Box width="80%" m={1}>
-        <Username usernameIsValid={usernameIsValid} setUsername={setUsername} />
+        <PhoneNumber phoneNumberIsValid={phoneNumberIsValid} setPhoneNumber={setPhoneNumber} />
       </Box>
       <Box width="80%" m={1}>
         <Password label="Password" passwordIsValid={passwordIsValid} setPassword={setPassword} />
@@ -100,7 +119,9 @@ const SignUp: React.FunctionComponent<{}> = () => {
 
   const accountCreated = (
     <>
-      <Typography variant="h5">{`Created ${username} account`}</Typography>
+      <Typography variant="h5">{`Created ${email} account`}</Typography>
+      <Typography variant="h5">{`given name ${givenName} account`}</Typography>
+      <Typography variant="h5">{`family name ${familyName} account`}</Typography>
       <Typography variant="h6">{`Verfiy Code sent to ${email}`}</Typography>
 
       <Box m={4}>

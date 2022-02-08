@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { isValidPhoneNumber } from 'libphonenumber-js'
 
 import * as yup from 'yup'
 
@@ -24,6 +25,24 @@ export const useValidEmail = (initialValue: string) => {
   return { email, setEmail, emailIsValid }
 }
 
+export const useValidPhoneNumber = (initialValue: string) => {
+  const [phoneNumber, setPhoneNumber] = useState(initialValue)
+  const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(true)
+
+  useEffect(() => {
+    if (phoneNumber.length === 0) {
+      setPhoneNumberIsValid(true)
+      return
+    }
+
+    const isValid = isValidPhoneNumber(phoneNumber, 'AE')
+
+    setPhoneNumberIsValid(isValid)
+  }, [phoneNumber])
+
+  return { phoneNumber, setPhoneNumber, phoneNumberIsValid }
+}
+
 export const useValidPassword = (initialValue: string) => {
   const [password, setPassword] = useState(initialValue)
   const [passwordIsValid, setPasswordIsValid] = useState(true)
@@ -46,26 +65,48 @@ export const useValidPassword = (initialValue: string) => {
   return { password, setPassword, passwordIsValid }
 }
 
-export const useValidUsername = (initialValue: string) => {
-  const [username, setUsername] = useState(initialValue)
-  const [usernameIsValid, setUsernameIsValid] = useState(true)
+export const useValidGivenName = (initialValue: string) => {
+  const [givenName, setGivenName] = useState(initialValue)
+  const [givenNameIsValid, setGivenNameIsValid] = useState(true)
 
   useEffect(() => {
-    const usernameSchema = yup.object().shape({
-      username: yup.string().min(8).required(),
+    const givenNameSchema = yup.object().shape({
+      givenName: yup.string().min(5).required(),
     })
 
-    if (username.length === 0) {
-      setUsernameIsValid(true)
+    if (givenName.length === 0) {
+      setGivenNameIsValid(true)
       return
     }
 
-    const isValid = usernameSchema.isValidSync({ username })
+    const isValid = givenNameSchema.isValidSync({ givenName })
 
-    setUsernameIsValid(isValid)
-  }, [username])
+    setGivenNameIsValid(isValid)
+  }, [givenName])
 
-  return { username, setUsername, usernameIsValid }
+  return { givenName, setGivenName, givenNameIsValid }
+}
+
+export const useValidFamilyName = (initialValue: string) => {
+  const [familyName, setFamilyName] = useState(initialValue)
+  const [familyNameIsValid, setFamilyNameIsValid] = useState(true)
+
+  useEffect(() => {
+    const familyNameSchema = yup.object().shape({
+      familyName: yup.string().min(8).required(),
+    })
+
+    if (familyName.length === 0) {
+      setFamilyNameIsValid(true)
+      return
+    }
+
+    const isValid = familyNameSchema.isValidSync({ familyName })
+
+    setFamilyNameIsValid(isValid)
+  }, [familyName])
+
+  return { familyName, setFamilyName, familyNameIsValid }
 }
 
 export const useValidCode = (initialValue: string) => {

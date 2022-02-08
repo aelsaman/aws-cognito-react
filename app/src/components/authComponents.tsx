@@ -19,6 +19,23 @@ export const Email: React.FunctionComponent<{ emailIsValid: boolean; setEmail: (
   )
 }
 
+export const PhoneNumber: React.FunctionComponent<{ phoneNumberIsValid: boolean; setPhoneNumber: (_: string) => void }> = ({
+  phoneNumberIsValid,
+  setPhoneNumber,
+}) => {
+  return (
+    <TextField
+      fullWidth
+      variant="outlined"
+      label={phoneNumberIsValid ? 'Email' : 'Invalid Email'}
+      error={!phoneNumberIsValid}
+      onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setPhoneNumber(evt.target.value)
+      }}
+    />
+  )
+}
+
 export const Password: React.FunctionComponent<{
   label: string
   passwordIsValid: boolean
@@ -38,18 +55,35 @@ export const Password: React.FunctionComponent<{
   )
 }
 
-export const Username: React.FunctionComponent<{ usernameIsValid: boolean; setUsername: (_: string) => void }> = ({
-  usernameIsValid,
-  setUsername,
+export const GivenName: React.FunctionComponent<{ givenNameIsValid: boolean; setGivenName: (_: string) => void }> = ({
+  givenNameIsValid,
+  setGivenName,
 }) => {
   return (
     <TextField
       fullWidth
       variant="outlined"
-      label={usernameIsValid ? 'Username' : 'Minimum 8 characters'}
-      error={!usernameIsValid}
+      label={givenNameIsValid ? 'Given Name' : 'Minimum 5 characters'}
+      error={!givenNameIsValid}
       onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setUsername(evt.target.value)
+        setGivenName(evt.target.value)
+      }}
+    />
+  )
+}
+
+export const FamilyName: React.FunctionComponent<{ familyNameIsValid: boolean; setFamilyName: (_: string) => void }> = ({
+  familyNameIsValid,
+  setFamilyName,
+}) => {
+  return (
+    <TextField
+      fullWidth
+      variant="outlined"
+      label={familyNameIsValid ? 'Family Name' : 'Minimum 5 characters'}
+      error={!familyNameIsValid}
+      onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setFamilyName(evt.target.value)
       }}
     />
   )

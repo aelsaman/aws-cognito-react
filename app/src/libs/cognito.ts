@@ -19,9 +19,10 @@ export function getCurrentUser() {
   return currentUser
 }
 
-function getCognitoUser(username: string) {
+// you can use email as username as per Cognito instance configuration
+function getCognitoUser(email: string) {
   const userData = {
-    Username: username,
+    Username: email,
     Pool: userPool,
   }
   const cognitoUser = new CognitoUser(userData)
@@ -47,16 +48,24 @@ export async function getSession() {
   })
 }
 
-export async function signUpUserWithEmail(username: string, email: string, password: string) {
+export async function signUpUser(email: string, password: string, givenName: string, familyName: string, phoneNumber: string) {
   return new Promise(function (resolve, reject) {
     const attributeList = [
       new CognitoUserAttribute({
-        Name: 'email',
-        Value: email,
+        Name: 'given_name',
+        Value: givenName,
+      }),
+      new CognitoUserAttribute({
+        Name: 'family_name',
+        Value: familyName,
+      }),
+      new CognitoUserAttribute({
+        Name: 'phone_number',
+        Value: phoneNumber,
       }),
     ]
 
-    userPool.signUp(username, password, attributeList, [], function (err, res) {
+    userPool.signUp(email, password, attributeList, [], function (err, res) {
       if (err) {
         reject(err)
       } else {
@@ -68,9 +77,9 @@ export async function signUpUserWithEmail(username: string, email: string, passw
   })
 }
 
-export async function verifyCode(username: string, code: string) {
+export async function verifyCode(email: string, code: string) {
   return new Promise(function (resolve, reject) {
-    const cognitoUser = getCognitoUser(username)
+    const cognitoUser = getCognitoUser(email)
 
     cognitoUser.confirmRegistration(code, true, function (err, result) {
       if (err) {
@@ -84,15 +93,15 @@ export async function verifyCode(username: string, code: string) {
   })
 }
 
-export async function signInWithEmail(username: string, password: string) {
+export async function signInWithEmail(email: string, password: string) {
   return new Promise(function (resolve, reject) {
     const authenticationData = {
-      Username: username,
+      Username: email,
       Password: password,
     }
     const authenticationDetails = new AuthenticationDetails(authenticationData)
 
-    currentUser = getCognitoUser(username)
+    currentUser = getCognitoUser(email)
 
     currentUser.authenticateUser(authenticationDetails, {
       onSuccess: function (res: any) {
@@ -145,12 +154,12 @@ export async function setAttribute(attribute: any) {
   })
 }
 
-export async function sendCode(username: string) {
+export async function sendCode(email: string) {
   return new Promise(function (resolve, reject) {
-    const cognitoUser = getCognitoUser(username)
+    const cognitoUser = getCognitoUser(email)
 
     if (!cognitoUser) {
-      reject(`could not find ${username}`)
+      reject(`could not find ${email}`)
       return
     }
 
@@ -167,12 +176,12 @@ export async function sendCode(username: string) {
   })
 }
 
-export async function forgotPassword(username: string, code: string, password: string) {
+export async function forgotPassword(email: string, code: string, password: string) {
   return new Promise(function (resolve, reject) {
-    const cognitoUser = getCognitoUser(username)
+    const cognitoUser = getCognitoUser(email)
 
     if (!cognitoUser) {
-      reject(`could not find ${username}`)
+      reject(`could not find ${email}`)
       return
     }
 
