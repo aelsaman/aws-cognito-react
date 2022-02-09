@@ -10,6 +10,7 @@ import AuthProvider, { AuthIsSignedIn, AuthIsNotSignedIn } from './contexts/auth
 
 import SignIn from './routes/auth/signIn'
 import SignUp from './routes/auth/signUp'
+import CogntioCallback from './routes/auth/cognito-callback'
 import VerifyCode from './routes/auth/verify'
 import RequestCode from './routes/auth/requestCode'
 import ForgotPassword from './routes/auth/forgotPassword'
@@ -39,6 +40,7 @@ const SignInRoute: React.FunctionComponent = () => (
       <Route path="/verify" component={VerifyCode} />
       <Route path="/requestcode" component={RequestCode} />
       <Route path="/forgotpassword" component={ForgotPassword} />
+      <Route path="/cognito-callback" component={CogntioCallback} />
       <Route path="/" component={Landing} />
     </Switch>
   </Router>

@@ -52,12 +52,13 @@ const AuthProvider: React.FunctionComponent = ({ children }) => {
     async function getSessionInfo() {
       try {
         const session: any = await getSession()
+        console.log('userPool.getCurrentUser().getSession() ==> ', session)
         setSessionInfo({
           accessToken: session.accessToken.jwtToken,
           refreshToken: session.refreshToken.token,
         })
-        window.localStorage.setItem('accessToken', `${session.accessToken.jwtToken}`)
-        window.localStorage.setItem('refreshToken', `${session.refreshToken.token}`)
+        // window.localStorage.setItem('accessToken', `${session.accessToken.jwtToken}`)
+        // window.localStorage.setItem('refreshToken', `${session.refreshToken.token}`)
         // await setAttribute({ Name: 'website', Value: 'https://github.com/dbroadhurst/aws-cognito-react' })
         const attr: any = await getAttributes()
         setAttrInfo(attr)

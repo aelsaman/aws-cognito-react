@@ -49,7 +49,13 @@ export async function getSession() {
   })
 }
 
-export async function signUpUser(email: string, password: string, givenName: string, familyName: string, phoneNumber: string) {
+export async function signUpUser(
+  email: string,
+  password: string,
+  givenName: string,
+  familyName: string,
+  phoneNumber: string
+) {
   return new Promise(function (resolve, reject) {
     const attributeList = [
       new CognitoUserAttribute({

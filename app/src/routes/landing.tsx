@@ -50,10 +50,30 @@ const Landing: React.FunctionComponent = () => {
           </Link>
         </Box>
         <Box m={2}>
+          <Grid container direction="row" justify="center" alignItems="center">
+            <Box mr={2}>
+              <Button onClick={signIn} variant="contained" color="primary">
+                Custom UI
+              </Button>
+            </Box>
+            <Box mr={2}>
+              <Button
+                onClick={() => {
+                  window.location.href =
+                    'https://nl-customer-dev.auth.eu-west-2.amazoncognito.com/login?client_id=3os4ga7pjtnjfm20smnrhohjjc&response_type=token&scope=openid+profile&redirect_uri=https://nl-cognito-poc.vercel.app/#/cognito-callback'
+                }}
+                variant="contained"
+                color="primary">
+                Cognito Hosted UI
+              </Button>
+            </Box>
+          </Grid>
+        </Box>
+        {/* <Box m={2}>
           <Button onClick={signIn} variant="contained" color="primary">
             SIGN IN
           </Button>
-        </Box>
+        </Box> */}
       </Grid>
     </Grid>
   )
